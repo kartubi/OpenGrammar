@@ -36,10 +36,12 @@
 ### Download & Install
 
 #### macOS
-1. Download the latest `OpenGrammar.dmg` from [Releases](../../releases)
-2. Open the DMG file
-3. Drag **OpenGrammar** to Applications folder
+1. Download the latest release from [GitHub Releases](../../releases)
+2. Extract the downloaded archive
+3. Move **OpenGrammar.app** to your Applications folder
 4. Launch the app and enter your Claude API key
+
+> **Note**: macOS may show a security warning for unsigned applications. Right-click the app and select "Open" to bypass this warning.
 
 #### Build from Source
 See [Development Setup](#-development-setup) below.
@@ -60,11 +62,20 @@ wails dev
 
 ### Build for Production
 ```bash
-# macOS Universal Binary
-wails build -platform darwin/universal
+# macOS Universal Binary (Intel + Apple Silicon)
+wails build -platform darwin/universal -upx
 
-# Create DMG (macOS only)
-cd build/bin && hdiutil create -volname "OpenGrammar" -srcfolder opengrammar.app -ov -format UDZO ../../OpenGrammar.dmg
+# Windows with NSIS installer
+wails build -platform windows/amd64 -nsis -upx
+
+# Linux
+wails build -platform linux/amd64 -upx
+
+# Build all platforms
+wails build -platform darwin/universal,windows/amd64,linux/amd64 -upx
+
+# Production build with obfuscation (optional)
+wails build -platform darwin/universal -obfuscated -trimpath -upx
 ```
 
 ## 🏗️ Architecture

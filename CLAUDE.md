@@ -81,16 +81,19 @@ npm run build  # Build frontend (TypeScript compilation + Vite build)
 ### Building for Production
 ```bash
 # Universal macOS Binary (Intel + Apple Silicon)
-wails build -platform darwin/universal
+wails build -platform darwin/universal -upx
 
-# Create DMG for distribution
-cd build/bin && hdiutil create -volname "OpenGrammar" -srcfolder opengrammar.app -ov -format UDZO ../../OpenGrammar.dmg
+# Windows with NSIS installer
+wails build -platform windows/amd64 -nsis -upx
 
-# Build for specific platforms
-wails build -platform darwin/amd64     # Intel Mac only
-wails build -platform darwin/arm64     # Apple Silicon only
-wails build -platform windows/amd64    # Windows 64-bit
-wails build -platform linux/amd64      # Linux 64-bit
+# Linux
+wails build -platform linux/amd64 -upx
+
+# Build all platforms at once
+wails build -platform darwin/universal,windows/amd64,linux/amd64 -upx
+
+# Production build with obfuscation and path trimming
+wails build -platform darwin/universal -obfuscated -trimpath -upx
 ```
 
 ### Go Backend
